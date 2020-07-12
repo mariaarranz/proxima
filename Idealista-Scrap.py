@@ -24,6 +24,7 @@ for quote in quotes:
     new = ((descripcion,precio))
     total.append(new)
 
+driver.quit()
 df = pd.DataFrame(total,columns=['Descripcion','Precio'])
 df.to_csv('Idealista.csv', index=False, encoding='utf-8-sig')
-driver.quit()
+
