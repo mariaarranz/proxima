@@ -27,12 +27,3 @@ for quote in quotes:
 df = pd.DataFrame(total,columns=['Descripcion','Precio'])
 df.to_csv('Idealista.csv', index=False, encoding='utf-8-sig')
 driver.quit()
-
-
-#driver.quit()
-'''
-print("Page Content:")
-print(contenido)
-
-#all_links = driver.find_elements_by_tag_name('a')
-'''
