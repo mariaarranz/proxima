@@ -8,31 +8,24 @@ driver = webdriver.Chrome()
 driver.get(url)
 time.sleep(5)
 
+items = len(driver.find_elements_by_class_name("item-info-container"))
 
-items = len(driver.find_elements_by_class_name("item-info-container"))-1
+total = []
+quotes = driver.find_elements_by_class_name("item-info-container")
+for quote in quotes:
+    descripcion = quote.find_element_by_class_name('item-link ').text
+    print(descripcion)
+    
+    precio = quote.find_element_by_class_name('item-price.h2-simulated').text
+    precio = precio.replace('€', '')
+    precio = precio.replace('.', '')
+    print(precio)
+    
+    new = ((descripcion,precio))
+    total.append(new)
 
-for item in range(items):
-    quotes = driver.find_elements_by_class_name("item-info-container")
-    for quote in quotes:
-        descripcion = quote.find_element_by_class_name('item-link ').text
-        print(descripcion)
-        
-        p = quote.find_element_by_class_name('item-price h2-simulated').text
-        print(p)
-
-        '''
-        precios = quote.find_element_by_class_name('row price-row clearfix')
-        for precio in precios:
-            p = precio.find_element_by_class_name('item-price h2-simulated').text
-            print(precio)
-        '''
-        
-        #author = quote.find_element_by_class_name('author').text
-        #new = ((quote_text,author))
-        #total.append(new)
-
-#df = pd.DataFrame(total,columns=['quote','author'])
-#df.to_csv('quoted.csv')
+df = pd.DataFrame(total,columns=['Descripcion','Precio'])
+df.to_csv('Idealista.csv', index=False, encoding='utf-8-sig')
 driver.quit()
 
 
