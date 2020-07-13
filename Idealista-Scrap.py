@@ -12,6 +12,7 @@ items = len(driver.find_elements_by_class_name("item-info-container"))
 
 total = []
 quotes = driver.find_elements_by_class_name("items-container")
+
 for quote in quotes:
     descripcion = quote.find_element_by_class_name('item-link ').text
     print(descripcion)
@@ -21,19 +22,63 @@ for quote in quotes:
     precio = precio.replace('.', '')
     print(precio)
 
-    detail1 = quote.find_element_by_xpath("(//span[@class='item-detail'])[1]").text
-    print(detail1)
+    count = len(driver.find_elements_by_css_selector("span.item-detail"))
+    habitaciones = ''
+    metros = ''
+    planta = ''
+    x = 1
+    
+    for i in range(1, (count + 1)):
+        txt = "(//span[@class='item-detail'])[{num}]".format(num = x)
+        detail = quote.find_element_by_xpath(txt).text
 
-    detail2 = quote.find_element_by_xpath("(//span[@class='item-detail'])[2]").text
-    print(detail2)
+        word = "hab"
+        if (word in detail) and (habitaciones == ''):
+            habitaciones = detail
+            x += 1
+        else:
+            habitaciones = ''
+        
+        if habitaciones != '':
+            break
+    print(x)    
+    print(habitaciones)
 
-    detail3 = quote.find_element_by_xpath("(//span[@class='item-detail'])[3]").text
-    print(detail3)
+    for i in range(1, (count + 1)):
+        txt = "(//span[@class='item-detail'])[{num}]".format(num = x)
+        detail = quote.find_element_by_xpath(txt).text
 
-    detail4 = quote.find_element_by_xpath("(//span[@class='item-detail'])[4]").text
-    print(detail4)
+        word = "m²"
+        if (word in detail) and (metros == ''):
+            metros = detail
+            x += 1
+        else:
+            metros = ''
+        
+        if metros != '':
+            break
+    print(x)    
+    print(metros)
 
-    new = ((descripcion,precio,detail1,detail2,detail3))
+    for i in range(1, (count + 1)):
+        txt = "(//span[@class='item-detail'])[{num}]".format(num = x)
+        detail = quote.find_element_by_xpath(txt).text
+
+        word = "planta"
+        if (word in detail) and (planta == ''):
+            planta = detail
+            x += 1
+        else:
+            planta = ''
+        
+        if planta != '':
+            break
+    print(x)    
+    print(planta)
+
+    print("siguienteee!!!!!!")
+
+    new = ((descripcion,precio,habitaciones,metros,planta))
     total.append(new)
 
 df = pd.DataFrame(total,columns=['Descripcion','Precio','Habitaciones','Metros','Planta'])
