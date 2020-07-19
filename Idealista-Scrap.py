@@ -16,6 +16,9 @@ for quote in quotes:
 
     descripcion = quote.find_element_by_class_name('item-link ').text
     #print(descripcion)
+
+    link = quote.find_element_by_class_name('item-link ').get_attribute('href')
+    print(link)
     
     precio = quote.find_element_by_class_name('item-price.h2-simulated').text
     precio = precio.replace('€', '')
@@ -74,11 +77,11 @@ for quote in quotes:
             break
     #print(planta)
 
-    new = ((descripcion,precio,habitaciones,metros,planta))
+    new = ((descripcion,precio,habitaciones,metros,planta,link))
     total.append(new)
 
 driver.quit()
-df = pd.DataFrame(total,columns=['Descripcion','Precio','Habitaciones','Metros','Planta'])
+df = pd.DataFrame(total,columns=['Descripcion','Precio','Habitaciones','Metros','Planta','Link'])
 print(df)
 
 writer = pd.ExcelWriter('Idealista.xlsx')
